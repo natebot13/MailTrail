@@ -9,6 +9,8 @@ from FlaskWebProject import app
 import twilio.twiml
 from twilio.rest import TwilioRestClient
 
+import sendgrid
+
 import Gameplay
 
 account_sid = "AC3930798939ffc71eddac1cf3e515a462"
