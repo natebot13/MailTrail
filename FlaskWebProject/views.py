@@ -3,8 +3,11 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template
+from flask import request, redirect, render_template
 from FlaskWebProject import app
+
+import twilio.twiml
+from twilio.rest import TwilioRestClient
 
 @app.route('/')
 @app.route('/home')
@@ -35,3 +38,11 @@ def about():
         year=datetime.now().year,
         message='Your application description page.'
     )
+
+@app.route('/text-test', methods=['GET', 'POST'])
+def test():
+    resp = twilio.twiml.Response()
+    message = request.values.get('Body', None)
+    if 'hello' in message.lower():
+        resp.message('world')
+    return str(resp)
