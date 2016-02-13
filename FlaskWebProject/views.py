@@ -9,7 +9,26 @@ from FlaskWebProject import app
 import twilio.twiml
 from twilio.rest import TwilioRestClient
 
+import emailer
+
 import Gameplay
+
+account_sid = "AC3930798939ffc71eddac1cf3e515a462"
+auth_token = "6a08e5998c52b12de9b4b36728ff2ad8"
+client = TwilioRestClient(account_sid, auth_token)
+
+sg = sendgrid.SendGridClient('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')
+
+email_url = '@mailtrailgame.com'
+
+def sendEmail(to, subject, text, from_,):
+    message = sendgrid.Mail()
+    message.add_to(to)
+    message.set_subject(subject)
+    # message.set_html(text)
+    message.set_text(text)
+    message.set_from(from_)
+    status, msg = sg.send(message)
 
 @app.route('/')
 @app.route('/home')
@@ -58,16 +77,20 @@ def text():
 
     return str(resp)
 
-@app.route('email', methods=['POST'])
+@app.route('/email', methods=['POST'])
 def email():
     gamename = request.values.get('subject', None)
     if not gamename: return
-    from_ = request.values.get('from', None)
-    if not from_: return
+    person = request.values.get('from', None)
+    if not person: return
     text = request.values.get('text', None)
     if not text: return
-    g = Gameplay.Game(gamename)
-    seg = 
+    # g = Gameplay.Game(gamename)
+    # goal = g.checkQuest(person)
+    # if goal[0]:
+        # sendEmail(from_, gamename, goal[1], gamename + email_url)
+    sendEmail(from_, gamename, text, gamename + email_url)
+
 
 @app.route('/text-test', methods=['GET', 'POST'])
 def test():
