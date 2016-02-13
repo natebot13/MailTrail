@@ -20,16 +20,19 @@ class Game:
 
 
     #returns the most current segment
-    def currentStatus(self,participant):
+    def currentSegment(self,participant):
         if self.collaborative:
             for seg in self.segments:
                 if seg.status < seg.completionScore:
                     return seg
         else:
             for seg in self.segments:
+                svalue = 0
                 for quest in seg.quests:
-                    if not participant in quest.participants:
-                        return seg
+                    if participant in participants:
+                        svalue += quest.points
+                if svalue < seg.completionScore:
+                    return seg
 
     def setCreator(self,creator):
         self.creator = creator
@@ -53,15 +56,27 @@ class Game:
         self.didUpdate = True
 
     #validates a submitted code and updates stuff if it was valid
-    def checkQuest(self,participant, quest, code):
+    def checkQuest(self,participant, seg, quest, code):
         if quest.code == code:
             quest.participants.append(participant)
             if not participant in self.subscribers:
                 self.subscribers.append(participant)
-            self.update
-            return True
-        else:
-            return False
+                outstr = ""
+                if seg.status + quest.points >= seg.completionScore:
+                    seg.completed = True;
+                    if self.collaborative:
+                        return True, "collab"
+                    else:
+                        if globalPrize:
+                            outstr += globalPrize + "\n"
+                        if prizes:
+                            outstr += prizes.pop() + "\n"
+                        elif participationPrize:
+                            outstr += participationPrize + "\n"
+                    self.update
+                return True, outstr
+
+        return False, ""
 
 
 
@@ -72,10 +87,23 @@ class Segment:
         self.completionScore = d["completionScore"]
         self.quests = [Quest(q) for q in d["quests"]]
         self.status = sum([q.points for q in self.quests if q.completed])
+        if "globalPrize" in d:
+            self.globalPrize = d["globalPrize"]
+        if "prizes" in d:
+            self.prizes = d["prizes"]
+        if "participationPrize" in d:
+            self.participationPrize = d["participationPrize"]
 
     def dictValue():
         rd = {"title" : self.title, "description" : self.description, "completionScore" : self.completionScore}
         rd["quests"] = [q.dictValue() for q in self.quests]
+        if self.prizes:
+            rd["prizes"] = self.prizes
+        if self.participationPrize:
+            rd["participationPrize"] = self.participationPrize
+        if self.globalPrize:
+            rd["globalPrize"] = self.globalPrize
+
         return rd
 
 
