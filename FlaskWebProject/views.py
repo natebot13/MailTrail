@@ -9,6 +9,8 @@ from FlaskWebProject import app
 import twilio.twiml
 from twilio.rest import TwilioRestClient
 
+import Gameplay
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -39,10 +41,26 @@ def about():
         message='Your application description page.'
     )
 
+@app.route('/receive-text', methods=['POST', 'GET'])
+def text():
+    resp = twilio.twiml.Response()
+    message = request.values.get('Body', None)
+    person = request.values.get('From', None)
+    if not message or not person:
+        return None
+    message = message.split()
+    g = Gameplay.Game(message[0])
+    if g.checkQuest(person, message[1], "".join(message)):
+        pass#TODO: resp.message(g.getSuccessMessage(message[1]))
+    
+    return str(resp)
+
 @app.route('/text-test', methods=['GET', 'POST'])
 def test():
     resp = twilio.twiml.Response()
     message = request.values.get('Body', None)
+    if not message:
+        return None
     if 'hello' in message.lower():
         resp.message('world')
     return str(resp)
