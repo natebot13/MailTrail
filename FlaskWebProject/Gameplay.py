@@ -33,7 +33,7 @@ class Game:
 
     def setCreator(self,creator):
         self.creator = creator
-        
+
     def subscribe(self,participant):
         if not participant in self.participants:
             sefl.participants.append(participant)
@@ -50,7 +50,7 @@ class Game:
     def update(self):
         with open("games/" + self.gamename + ".json", "w") as jfile:
             json.dump()
-        self.didUpdate = true
+        self.didUpdate = True
 
     #validates a submitted code and updates stuff if it was valid
     def checkQuest(self,participant, quest, code):
