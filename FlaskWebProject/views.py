@@ -79,17 +79,17 @@ def text():
 
 @app.route('/email', methods=['POST'])
 def email():
-    gamename = request.values.get('subject', None)
-    if not gamename: return
-    person = request.values.get('from', None)
-    if not person: return
-    text = request.values.get('text', None)
-    if not text: return
+    # gamename = request.values.get('subject', None)
+    # if not gamename: return
+    # person = request.values.get('from', None)
+    # if not person: return
+    # text = request.values.get('text', None)
+    # if not text: return
     # g = Gameplay.Game(gamename)
     # goal = g.checkQuest(person)
     # if goal[0]:
         # sendEmail(from_, gamename, goal[1], gamename + email_url)
-    sendEmail(from_, gamename, text, gamename + email_url)
+    sendEmail('tekkbot@gmail.com', 'gamename', 'text', 'gamename' + email_url)
 
 
 @app.route('/text-test', methods=['GET', 'POST'])
