@@ -41,7 +41,7 @@ def about():
         message='Your application description page.'
     )
 
-@app.route('/receive-text', methods=['POST', 'GET'])
+@app.route('/text', methods=['POST', 'GET'])
 def text():
     resp = twilio.twiml.Response()
     message = request.values.get('Body', None)
@@ -49,11 +49,25 @@ def text():
     if not message or not person:
         return None
     message = message.split()
+    if len(message) < 3:
+        return None
     g = Gameplay.Game(message[0])
-    if g.checkQuest(person, message[1], "".join(message)):
+    seg = g.currentStatus()
+    if g.checkQuest(person, message[1], "".join(message[2:])):
         pass#TODO: resp.message(g.getSuccessMessage(message[1]))
-    
+
     return str(resp)
+
+@app.route('email', methods=['POST'])
+def email():
+    gamename = request.values.get('subject', None)
+    if not gamename: return
+    from_ = request.values.get('from', None)
+    if not from_: return
+    text = request.values.get('text', None)
+    if not text: return
+    g = Gameplay.Game(gamename)
+    seg = 
 
 @app.route('/text-test', methods=['GET', 'POST'])
 def test():
