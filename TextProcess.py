@@ -58,7 +58,7 @@ def evalAndRespond(email, text, gamename):
 
 	else:
 		message = ""
-		if sum([q.points for q in segment.quests if email in q.participants]) > segment.completionScore:
+		if sum([q.points for q in segment.quests if email in q.participants]) >= segment.completionScore:
 			if segment.globalPrize:
 				message = segment.globalPrize + "\n"
 			if segment.prizes:
