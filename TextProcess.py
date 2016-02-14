@@ -18,7 +18,7 @@ email_url = '@mailtrailgame.com'
 def evalAndRespond(email, text, gamename):
 	try:
 		game = Gameplay.Game(gamename)
-	except Error as e:
+	except Exception as e:
 		sendMessage("adsf","asdf",str(e),email)
 		#sendTutorial(email)
 		return
