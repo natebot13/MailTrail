@@ -80,10 +80,12 @@ def bodyOfSegment(participant, segment, game):
 	return outstr
 
 
-def sendMessage(gamename,subject,body, to):
+def sendMessage(gamename, subject, body, to):
 	if not "@" in to:
 		#this must be a phone number so use text instead
+		print('Sending reply to:', to)
 		message = client.messages.create(to=to, from_="16195866665", body=body)
+		print(message)
 	else:
 		message = sendgrid.Mail()
 		message.add_to(to)
