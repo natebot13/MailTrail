@@ -3,6 +3,7 @@ Routes and views for the flask application.
 """
 from datetime import datetime
 from flask import request, redirect, render_template
+from mailtrail import app
 
 import TextProcess
 
