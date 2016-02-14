@@ -99,11 +99,11 @@ def bodyOfSegment(participant, segment, game):
 	for q in segment.quests:
 		if "@" in participant:
 			if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
-				outstr += ' <p style="font-size:20px">X '
+				outstr += ' <span style="font-size:20px">X '
 			else:
-				outstr += ' <p style="font-size:20px">- '
+				outstr += ' <span style="font-size:20px">- '
 			outstr += "<b>[" + str(q.points) + "]</b> "
-			outstr += '<p style="font-size:12px">' + q.title + "<br><p margin-left:10em><i>" + q.description + "</i></p><br>"
+			outstr += '<span style="font-size:12px">' + q.title + "<br><p margin-left:10em><i>" + q.description + "</i></p><br></span>"
 		else:
 			if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
 				outstr += " X "
