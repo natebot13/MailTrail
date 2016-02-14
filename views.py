@@ -51,10 +51,13 @@ def text():
 @app.route('/email', methods=['POST', 'GET'])
 def email():
     print('Receiving email...')
+    TextProcess.sendMessage("asdf", "asdf", "A", "19253818669")
     email = request.values.to('subject', None)
+    TextProcess.sendMessage("asdf", "asdf", "B", "19253818669")
     gamename = email[:email.find("@")]
-    TextProcess.sendMessage("asdf", "asdf", "Hello World2", "19253818669")
+    TextProcess.sendMessage("asdf", "asdf", "C", "19253818669")
     person = request.values.get('from', None)
+    TextProcess.sendMessage("asdf", "asdf", "D", "19253818669")
     text = request.values.get('text', None)
     TextProcess.sendMessage("asdf","asdf","To: " + gamename + " from: " + person + " text: " + text, "19253818669")
     if not gamename or not person or not text: return "Incorrect POST data"
