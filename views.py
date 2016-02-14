@@ -44,9 +44,9 @@ def text():
     person = request.values.get('From', None)
     gamename = 'treehacks'
     if not message or not person:
-        return None
+        return 'Incorrect POST data'
     TextProcess.evalAndRespond(person, message, gamename)
-    return "This is not a site to be view by the browser"
+    return 'OK'
 
 @app.route('/email', methods=['POST', 'GET'])
 def email():
@@ -57,7 +57,7 @@ def email():
     text = request.values.get('text', None)
     if not gamename or not person or not text: return "Incorrect POST data"
     TextProcess.evalAndRespond(person, text, gamename)
-    return "Good post data"
+    return 'OK'
 
 
 @app.route('/text-test', methods=['GET', 'POST'])
