@@ -92,15 +92,23 @@ def tutorialText():
 	return "How to play:\n1. Recieve emails with a list of quests to complete\n2. Follow the instructions for a quest to find the secret code\n3. Reply to the email with the code to complete the quest\n\nIt's as easy as that!  You can work competitively or collaboratively and there may be prizes such as gift cards involved!"
 
 def bodyOfSegment(participant, segment, game):
-	outstr = segment.description + "\nRequiredScore: " + str(segment.completionScore) + "\n\n"
+	if "@" in participant:
+		outstr = '<p style="font-size:14px">' + segment.description + "\n<i>RequiredScore: " + str(segment.completionScore) + "</i></p>\n\n"
+	else:
+		outstr = segment.description + "\nRequiredScore: " + str(segment.completionScore) + "\n\n"
 	for q in segment.quests:
 		if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
 			outstr += " X "
 		else:
 			outstr += " - "
-		outstr += "[" + str(q.points) + "] "
-		outstr += q.title + "\n      " + q.description + "\n"
-	outstr += "\n(Completed quests are marked with an 'X' while uncompleted quests are marked with a '-'.)\n"
+		if "@" in participant:
+			outstr += "<b>[" + str(q.points) + "]</b> "
+			outstr += q.title + "\n\t<i>" + q.description + "</i>\n"
+		else:
+			outstr += "[" + str(q.points) + "] "
+			outstr += q.title + "\n      " + q.description + "\n"
+	if not "@" in participant:
+		outstr += "\n(Completed quests are marked with an 'X' while uncompleted quests are marked with a '-'.)\n"
 	return outstr
 
 
@@ -114,6 +122,6 @@ def sendMessage(gamemail, subject, body, to):
 		message = sendgrid.Mail()
 		message.add_to(to)
 		message.set_subject(subject)
-		message.set_text(body)
+		message.set_html(body)
 		message.set_from(gamemail)
 		status, msg = sg.send(message)
