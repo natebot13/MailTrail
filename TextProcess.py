@@ -19,7 +19,8 @@ def evalAndRespond(email, text, gamename):
 	try:
 		game = Gameplay.Game(gamename)
 	except:
-		sendTutorial(email)
+		print(email,text,gamename)
+		#sendTutorial(email)
 		return
 	if not email in game.subscribers:
 		game.subscribe(email)
