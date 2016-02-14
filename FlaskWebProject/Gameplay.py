@@ -56,13 +56,16 @@ class Game:
         self.didUpdate = True
 
     #validates a submitted code and updates stuff if it was valid
-    def checkQuest(self,participant, seg, quest, code):
-        if quest.code == code:
-            quest.participants.append(participant)
-            if not participant in self.subscribers:
-                self.subscribers.append(participant)
-                outstr = ""
-                if seg.status + quest.points >= seg.completionScore:
+    def checkQuest(self,participant, seg, code):
+        if not participant in self.subscribers:
+            self.subscribers.append(participant)
+
+        for q in seg.quests:
+            if q.code == code:
+                if not participant in q.participants:
+                    outstr = ""
+                    q.participants.append(participant)
+                    if seg.status + quest.points >= seg.completionScore:
                     seg.completed = True;
                     if self.collaborative:
                         return True, "collab"
@@ -74,9 +77,8 @@ class Game:
                         elif participationPrize:
                             outstr += participationPrize + "\n"
                     self.update
-                return True, outstr
-
-        return False, ""
+                    return True, outstr
+            return False, ""
 
 
 
@@ -87,6 +89,7 @@ class Segment:
         self.completionScore = d["completionScore"]
         self.quests = [Quest(q) for q in d["quests"]]
         self.status = sum([q.points for q in self.quests if q.completed])
+        self.errorMessage = d["errorMessage"]
         if "globalPrize" in d:
             self.globalPrize = d["globalPrize"]
         if "prizes" in d:
@@ -95,7 +98,7 @@ class Segment:
             self.participationPrize = d["participationPrize"]
 
     def dictValue():
-        rd = {"title" : self.title, "description" : self.description, "completionScore" : self.completionScore}
+        rd = {"title" : self.title, "description" : self.description, "completionScore" : self.completionScore, "errorMessage" : self.errorMessage}
         rd["quests"] = [q.dictValue() for q in self.quests]
         if self.prizes:
             rd["prizes"] = self.prizes
