@@ -93,17 +93,17 @@ def tutorialText():
 
 def bodyOfSegment(participant, segment, game):
 	if "@" in participant:
-		outstr = '<p style="font-size:14px">' + segment.description + "<br><i>RequiredScore: " + str(segment.completionScore) + "</i></p>\n\n"
+		outstr = '<p style="font-size:14px">' + segment.description + '<br><p style="font-size:13px"><i>RequiredScore: ' + str(segment.completionScore) + "</i></p>\n\n"
 	else:
 		outstr = segment.description + "\nRequiredScore: " + str(segment.completionScore) + "\n\n"
 	for q in segment.quests:
 		if "@" in participant:
 			if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
-				outstr += " &#x25A1 "
+				outstr += ' <p style="font-size:20px">&#x25A1</p> '
 			else:
-				outstr += " &#x1F5F9 "
+				outstr += ' <p style="font-size:20px">&#x2611FE0E</p> '
 			outstr += "<b>[" + str(q.points) + "]</b> "
-			outstr += q.title + "<br><p padding-left:5em><i>" + q.description + "</i></p><br>"
+			outstr += q.title + "<br><p margin-left:10em><i>" + q.description + "</i></p><br>"
 		else:
 			if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
 				outstr += " X "
