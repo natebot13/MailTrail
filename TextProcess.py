@@ -13,32 +13,30 @@ sg = sendgrid.SendGridClient('SG.Wqq5XMBMS3-bUjqABS-nYQ.iNAxx07qahuKiFUg0cu67PHn
 
 email_url = '@mailtrailgame.com'
 
-def evalAndRespond(email, text, gamename):
+def evalAndRespond(email, text, gamemail):
+	gamename = gamemail[:gamemail.find("@")]
 	try:
 		game = Gameplay.Game(gamename)
 	except:
 		sendTutorial(email)
 		return
-	sendMessage("ASDF","ASDF","this was", "19253818669")
+	game.gamemail = gamemail
 
 	segment = game.currentSegment(email)
-	sendMessage("ASDF","ASDF","tst", "19253818669")
 
 	if not segment:
-		sendMessage(game.gamename, game.gamename + " Completed", "The game '" + game.gamename + "' has already been comleted.  Congratulations!", email)
-		sendMessage("ASDF","ASDF","this was a test", "19253818669")
+		sendMessage(game.gamemail, game.gamename + " Completed", "The game '" + game.gamename + "' has already been comleted.  Congratulations!", email)
 	if not email in game.subscribers:
 		game.subscribe(email)
-		sendMessage("ASDF","ASDF","shouldabesent", "19253818669")
 		sendWelcome(email,segment,game)
 		return
 
 	success = game.checkQuest(email, segment, text.split()[0])
 	if not success:
 		if text.split()[0] == "help":
-			sendMessage(game.gamename, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game) + "\n\n" + tutorialText(), email)
+			sendMessage(game.gamemail, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game) + "\n\n" + tutorialText(), email)
 		else:
-			sendMessage(game.gamename, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game), email)
+			sendMessage(game.gamemail, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game), email)
 	elif game.collaborative:
 		scores = {}
 		completedScores = {}
@@ -61,9 +59,9 @@ def evalAndRespond(email, text, gamename):
 				endstr = segment.globalPrize + segment.participationPrize
 
 			if p == email:
-				sendMessage(game.gamename, segment.title, "You completed a quest!\n\n" + bodyOfSegment(p, segment, game)+"\n\n"+ endstr,p)
+				sendMessage(game.gamemail, segment.title, "You completed a quest!\n\n" + bodyOfSegment(p, segment, game)+"\n\n"+ endstr,p)
 			else:
-				sendMessage(game.gamename, segment.title, "A quest was completed.\n\n" + bodyOfSegment(p, segment, game)+ "\n\n"+ endstr,p)
+				sendMessage(game.gamemail, segment.title, "A quest was completed.\n\n" + bodyOfSegment(p, segment, game)+ "\n\n"+ endstr,p)
 
 	else:
 		message = ""
@@ -75,15 +73,14 @@ def evalAndRespond(email, text, gamename):
 			elif segment.participationPrize:
 				message += segment.participationPrize() + "\n"
 
-		sendMessage(game.gamename, segment.title, "You completed a quest!\n\n" + bodyOfSegment(email, segment, game) + "\n" + message, email)
+		sendMessage(game.gamemail, segment.title, "You completed a quest!\n\n" + bodyOfSegment(email, segment, game) + "\n" + message, email)
 	game.update()
 
 def sendWelcome(email, segnment, game):
-	sendMessage("ASDF","ASDF","welcoming", "19253818669")
-	sendMessage(game.gamename, "Welcome to " + game.gamename, game.description + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ tutorialText() + "\n\nReply to this email to get started!", email)
+	sendMessage(game.gamemail, "Welcome to " + game.gamename, game.description + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ tutorialText() + "\n\nReply to this email to get started!", email)
 
 def sendTutorial(email):
-	sendMessage("welcome","Welcome to MailTrail" ,"Welcome to MailTrail!\n\nTo get started, send an email to <gamename>@mailtrailgame.com where <gamename> is the name of the game you want to join.\n\n" + tutorialText(), email)
+	sendMessage("welcome@mailtrailgame.com","Welcome to MailTrail" ,"Welcome to MailTrail!\n\nTo get started, send an email to <gamename>@mailtrailgame.com where <gamename> is the name of the game you want to join.\n\n" + tutorialText(), email)
 
 def tutorialText():
 	return "How to play:\n1. Recieve emails with a list of quests to complete\n2. Follow the instructions for a quest to find the secret code\n3. Reply to the email with the code to complete the quest\n\nIt's as easy as that!  You can work competitively or collaboratively and there may be prizes such as gift cards involved!"
@@ -101,7 +98,7 @@ def bodyOfSegment(participant, segment, game):
 	return outstr
 
 
-def sendMessage(gamename, subject, body, to):
+def sendMessage(gamemail, subject, body, to):
 	if not "@" in to:
 		#this must be a phone number so use text instead
 		print('Sending reply to:', to)
@@ -112,5 +109,5 @@ def sendMessage(gamename, subject, body, to):
 		message.add_to(to)
 		message.set_subject(subject)
 		message.set_text(body)
-		message.set_from(gamename + email_url)
+		message.set_from(gamemail)
 		status, msg = sg.send(message)
