@@ -14,6 +14,8 @@ sg = sendgrid.SendGridClient('SG.Wqq5XMBMS3-bUjqABS-nYQ.iNAxx07qahuKiFUg0cu67PHn
 email_url = '@mailtrailgame.com'
 
 def evalAndRespond(email, text, gamename):
+	for i in range(100):
+		print i
 	try:
 		game = Gameplay.Game(gamename)
 	except:
