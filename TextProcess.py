@@ -63,6 +63,7 @@ def sendWelcome(email, game):
 
 def sendTutorial(email):
 	tutText = tutorialText()
+	print(tutText)
 	sendMessage("welcome","Welcome to MailTrail" ,"Welcome to MailTrail!\n\nTo get started, send an email to <gamename>@mailtrailgame.com where <gamename> is the name of the game you want to join.\n\n" + tutText, email)
 
 def tutorialText():
