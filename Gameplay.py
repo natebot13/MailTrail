@@ -39,6 +39,7 @@ class Game:
     def subscribe(self,participant):
         if not participant in self.subscribers:
             self.subscribers.append(participant)
+        self.update()
 
     def dictValue(self):
         rd = {"description" : self.description, "collaborative" : self.collaborative}
