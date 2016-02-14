@@ -1,12 +1,8 @@
 """
 This script runs the FlaskWebProject application using a development server.
 """
-import os
 from os import environ
-from FlaskWebProject import app
-import sys
-sys.path.insert(0, '/var/www/MailTrail')
-os.chdir('/var/www/MailTrail')
+from views import app
 
 if __name__ == '__main__':
     HOST = environ.get('SERVER_HOST', 'localhost')
