@@ -2,7 +2,7 @@
 This script runs the FlaskWebProject application using a development server.
 """
 from os import environ
-from views import app as application
+from views import app
 
 if __name__ == '__main__':
     HOST = environ.get('SERVER_HOST', 'localhost')
@@ -10,4 +10,4 @@ if __name__ == '__main__':
         PORT = int(environ.get('SERVER_PORT', '5555'))
     except ValueError:
         PORT = 5555
-    application.run(HOST, PORT)
+    app.run(HOST, PORT)
