@@ -22,12 +22,14 @@ def evalAndRespond(email, text, gamename):
 	sendMessage("ASDF","ASDF","this was", "19253818669")
 
 	segment = game.currentSegment(email)
+	sendMessage("ASDF","ASDF","tst", "19253818669")
 
 	if not segment:
 		sendMessage(game.gamename, game.gamename + " Completed", "The game '" + game.gamename + "' has already been comleted.  Congratulations!", email)
 		sendMessage("ASDF","ASDF","this was a test", "19253818669")
 	if not email in game.subscribers:
 		game.subscribe(email)
+		sendMessage("ASDF","ASDF","shouldabesent", "19253818669")
 		sendWelcome(email,segment,game)
 		return
 
