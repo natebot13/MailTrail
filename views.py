@@ -42,7 +42,7 @@ def text():
     print('Receiving text...')
     message = request.values.get('Body', None)
     person = request.values.get('From', None)
-    gamename = 'treehacks'
+    gamename = 'treehacks@'
     if not message or not person:
         return 'Incorrect POST data'
     TextProcess.evalAndRespond(person, message, gamename)
