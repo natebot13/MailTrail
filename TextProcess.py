@@ -19,6 +19,7 @@ def evalAndRespond(email, text, gamename):
 	except:
 		sendTutorial(email)
 		return
+	sendMessage("ASDF","ASDF","this was", "19253818669")
 
 	segment = game.currentSegment(email)
 
