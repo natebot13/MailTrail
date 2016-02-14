@@ -27,7 +27,7 @@ def evalAndRespond(email, text, gamename):
 	segment = game.currentSegment(email)
 
 	if not segment:
-		sendMessage(game.gamename, game.gamename + " Completed", "The game " + game.gamename + " has already been comleted.  Congradulations!", email)
+		sendMessage(game.gamename, game.gamename + " Completed", "The game '" + game.gamename + "' has already been comleted.  Congratulations!", email)
 
 	success = game.checkQuest(email, segment, text.split()[0])
 	if not success:
