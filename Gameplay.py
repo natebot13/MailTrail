@@ -66,7 +66,7 @@ class Game:
                 if not participant in q.participants:
                     outstr = ""
                     q.participants.append(participant)
-                    if seg.status + quest.points >= seg.completionScore:
+                    if seg.status + q.points >= seg.completionScore:
                         seg.completed = True;
                         if self.collaborative:
                             return True, "collab"
