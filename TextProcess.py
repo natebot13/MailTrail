@@ -27,7 +27,7 @@ def evalAndRespond(email, text, gamename):
 		return
 
 	segment = game.currentSegment(email)
-	success, message = Gameplay.checkQuest(email, segment, text.split()[0])
+	success, message = game.checkQuest(email, segment, text.split()[0])
 	if not success:
 		sendMessage(game.gamename, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game) + "\n\n" + tutorialText(), email)
 	elif game.collaborative:
