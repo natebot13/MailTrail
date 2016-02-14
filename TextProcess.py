@@ -60,8 +60,7 @@ def sendWelcome(email, game):
 	sendMessage(game.gamename, "Welcome to " + game.gamename, game.description + "\n\n" + tutorialText(), email)
 
 def sendTutorial(email):
-	tutText = "test"
-	sendMessage("welcome","Welcome to MailTrail" ,"Welcome to MailTrail!\n\nTo get started, send an email to <gamename>@mailtrailgame.com where <gamename> is the name of the game you want to join.\n\n" + tutText, email)
+	sendMessage("welcome","Welcome to MailTrail" ,"Welcome to MailTrail!\n\nTo get started, send an email to <gamename>@mailtrailgame.com where <gamename> is the name of the game you want to join.\n\n" + tutorialText(), email)
 
 def tutorialText():
 	return "How to play:\n1. Recieve emails with a list of quests to complete\n2. Follow the instructions for a quest to find the secret code\n3. Reply to the email with the code to complete the quest\n\nIt's as easy as that!  You can work competitively or collaboratively and there may be prizes such as gift cards involved!"
