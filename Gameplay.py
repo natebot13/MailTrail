@@ -37,7 +37,7 @@ class Game:
         self.creator = creator
 
     def subscribe(self,participant):
-        if not participant in self.participants:
+        if not participant in self.subscribers:
             sefl.participants.append(participant)
 
     def dictValue(self):
