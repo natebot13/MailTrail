@@ -91,6 +91,9 @@ class Segment:
         self.quests = [Quest(q) for q in d["quests"]]
         self.status = sum([q.points for q in self.quests if q.completed])
         self.errorMessage = d["errorMessage"]
+        self.globalPrize = None
+        self.prizes = None
+        self.participationPrize = None
         if "globalPrize" in d:
             self.globalPrize = d["globalPrize"]
         if "prizes" in d:
