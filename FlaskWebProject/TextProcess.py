@@ -16,7 +16,7 @@ email_url = '@mailtrailgame.com'
 def evalAndRespond(email, text, gamename):
 	try:
 		game = Gameplay.Game(gamename)
-	except IOError as e:
+	except:
 		sendTutorial(email)
 		return
 	if not email in game.subscribers:
