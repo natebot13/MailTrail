@@ -57,7 +57,7 @@ def evalAndRespond(email, text, gamename):
 				sendMessage(game.gamename, segment.title, "A quest was completed.\n\n" + bodyOfSegment(p, segment, game)+ "\n\n"+ endstr,p)
 
 	else:
-		sendMessage(game.gamename, segment.title, "You completed a quest!\n\n" + bodyOfSegment(p, segment, game) + "\n" + message, p)
+		sendMessage(game.gamename, segment.title, "You completed a quest!\n\n" + bodyOfSegment(email, segment, game) + "\n" + message, email)
 
 def sendWelcome(email, game):
 	sendMessage(game.gamename, "Welcome to " + game.gamename, game.description + "\n\n" + tutorialText() + "\n\nReply to this email to get started!", email)
@@ -72,11 +72,12 @@ def bodyOfSegment(participant, segment, game):
 	outstr = segment.description + "\nRequiredScore: " + str(segment.completionScore) + "\n\n"
 	for q in segment.quests:
 		if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
-			outstr += " x "
+			outstr += " X "
 		else:
 			outstr += " - "
-		outstr += q.title + "\t" + str(q.points) + "\n      " + q.description + "\n"
-	outstr += "\n(Completed quests are marked with an 'x' while uncompleted quests are marked with a '-'.)\n"
+			outstr += "[" + str(q.points) + "] "
+		outstr += q.title + "\n      " + q.description + "\n"
+	outstr += "\n(Completed quests are marked with an 'X' while uncompleted quests are marked with a '-'.)\n"
 	return outstr
 
 
