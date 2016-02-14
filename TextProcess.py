@@ -5,8 +5,6 @@ from twilio.rest import TwilioRestClient
 
 import sendgrid
 
-import os
-
 account_sid = "AC3930798939ffc71eddac1cf3e515a462"
 auth_token = "6a08e5998c52b12de9b4b36728ff2ad8"
 client = TwilioRestClient(account_sid, auth_token)
@@ -33,7 +31,10 @@ def evalAndRespond(email, text, gamename):
 
 	success = game.checkQuest(email, segment, text.split()[0])
 	if not success:
-		sendMessage(game.gamename, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game) + "\n\n" + tutorialText(), email)
+		if text.split()[0] == "help":
+			sendMessage(game.gamename, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game) + "\n\n" + tutorialText(), email)
+		else:
+			sendMessage(game.gamename, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game), email)
 	elif game.collaborative:
 		scores = {}
 		completedScores = {}
