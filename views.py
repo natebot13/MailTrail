@@ -39,6 +39,7 @@ def about():
 
 @app.route('/text', methods=['POST', 'GET'])
 def text():
+    print('Receiving text...')
     message = request.values.get('Body', None)
     person = request.values.get('From', None)
     gamename = 'treehacks'
@@ -49,6 +50,7 @@ def text():
 
 @app.route('/email', methods=['POST', 'GET'])
 def email():
+    print('Receiving email...')
     TextProcess.sendMessage("asdf","asdf", "Email recieved", "19253818669")
     gamename = request.values.get('subject', None)
     if not gamename: return
