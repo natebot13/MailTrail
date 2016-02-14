@@ -6,6 +6,8 @@ from flask import request, redirect, render_template
 from mailtrail import app
 
 import TextProcess
+import json
+import os
 
 @app.route('/')
 @app.route('/home')
@@ -36,14 +38,29 @@ def about():
         year=datetime.now().year,
         message='Your application description page.'
     )
-import urllib
 
 @app.route('/text', methods=['POST', 'GET'])
 def text():
     print('Receiving text...')
     message = request.values.get('Body', None)
     person = request.values.get('From', None)
-    gamename = 'treehacks@blank.b'
+    jdata = {}
+    if "textReg.json" in os.listDir():
+        with open("textReg.json", "r") as jfile:
+            jdata = json.load(jfile)
+
+    if len(message.split()) > 1 and message.split()[0] == "switch":
+        jdata[person] = message.split()[1] 
+
+    if person in jdata:
+        gamename = jdata[person] + "@nathanp.me"
+    else:
+        gamename = 'treehacks@nathanp.me'
+        jdata[person] = "treehacks"
+
+    with open("textReg.json", "w") as jfile:
+        json.dump(jdata, jfile)
+
     if not message or not person:
         return 'Incorrect POST data'
     TextProcess.evalAndRespond(person, message, gamename)
