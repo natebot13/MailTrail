@@ -69,13 +69,13 @@ def tutorialText():
 	return "How to play:\n1. Recieve emails with a list of quests to complete\n2. Follow the instructions for a quest to find the secret code\n3. Reply to the email with the code to complete the quest\n\nIt's as easy as that!  You can work competitively or collaboratively and there may be prizes such as gift cards involved!"
 
 def bodyOfSegment(participant, segment, game):
-	outstr = segment.description + "\nRequiredScore: " + segment.completionScore + "\n\n"
+	outstr = segment.description + "\nRequiredScore: " + str(segment.completionScore) + "\n\n"
 	for q in segment.quests:
 		if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
 			outstr += " x "
 		else:
 			outstr += " - "
-		outstr += q.title + "\t" + q.points + "\n      " + q.description + "\n"
+		outstr += q.title + "\t" + str(q.points) + "\n      " + q.description + "\n"
 	outstr += "\n(Completed quests are marked with an 'x' while uncompleted quests are marked with a '-'.)\n"
 	return outstr
 
