@@ -46,7 +46,7 @@ def text():
     if not message or not person:
         return None
     TextProcess.evalAndRespond(person, message, gamename)
-    return render_template("This is not a site to be view by the browser")
+    return "This is not a site to be view by the browser"
 
 @app.route('/email', methods=['POST', 'GET'])
 def email():
@@ -59,7 +59,7 @@ def email():
     text = request.values.get('text', None)
     if not text: return
     TextProcess.evalAndRespond(person, text, gamename)
-    return render_template("This is not a site to be view by the browser")
+    return "This is not a site to be view by the browser"
 
 
 @app.route('/text-test', methods=['GET', 'POST'])
