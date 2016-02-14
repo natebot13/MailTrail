@@ -75,7 +75,7 @@ def bodyOfSegment(participant, segment, game):
 			outstr += " X "
 		else:
 			outstr += " - "
-			outstr += "[" + str(q.points) + "] "
+		outstr += "[" + str(q.points) + "] "
 		outstr += q.title + "\n      " + q.description + "\n"
 	outstr += "\n(Completed quests are marked with an 'X' while uncompleted quests are marked with a '-'.)\n"
 	return outstr
