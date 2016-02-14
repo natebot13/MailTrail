@@ -54,8 +54,10 @@ def email():
     email = request.values.get('to', None)
     person = request.values.get('from', None)
     text = request.values.get('text', None)
-    if not email or not person or not text:
+    if not email or not person:
         return "Incorrect POST data"
+    if not text:
+        text = ""
     TextProcess.evalAndRespond(person, text, email)
     return 'OK'
 

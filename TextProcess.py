@@ -76,7 +76,7 @@ def evalAndRespond(email, text, gamemail):
 		sendMessage(game.gamemail, segment.title, "You completed a quest!\n\n" + bodyOfSegment(email, segment, game) + "\n" + message, email)
 	game.update()
 
-def sendWelcome(email, segnment, game):
+def sendWelcome(email, segment, game):
 	sendMessage(game.gamemail, "Welcome to " + game.gamename, game.description + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ tutorialText() + "\n\nReply to this email to get started!", email)
 
 def sendTutorial(email):
