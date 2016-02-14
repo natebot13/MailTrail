@@ -44,7 +44,7 @@ def text():
     gamename = 'treehacks'
     if not message or not person:
         return None
-    evalAndRespond(person, message, gamename)
+    TextProcess.evalAndRespond(person, message, gamename)
 
 @app.route('/email', methods=['POST'])
 def email():
