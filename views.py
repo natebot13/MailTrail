@@ -13,28 +13,18 @@ def home():
     """Renders the home page."""
     return render_template(
         'index.html',
-        title='Home Page',
+        title='mailTrail',
         year=datetime.now().year,
     )
 
-@app.route('/contact')
-def contact():
-    """Renders the contact page."""
-    return render_template(
-        'contact.html',
-        title='Contact',
-        year=datetime.now().year,
-        message='Your contact page.'
-    )
-
-@app.route('/about')
+@app.route('/create')
 def about():
     """Renders the about page."""
     return render_template(
-        'about.html',
-        title='About',
+        'create.html',
+        title='Create',
         year=datetime.now().year,
-        message='Your application description page.'
+        message='Create a game here!'
     )
 import urllib
 
