@@ -20,7 +20,7 @@ def evalAndRespond(email, text, gamename):
 		game = Gameplay.Game(gamename)
 	except:
 		msg = ""
-		dirs = os.listdir(".")
+		dirs = os.listdir("games/")
 		for d in dirs:
 			msg += d + "\n"
 		sendMessage("adsf","asdf",msg,email)
