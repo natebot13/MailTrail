@@ -30,10 +30,10 @@ def evalAndRespond(email, text, gamemail):
 		game.subscribe(email)
 		sendWelcome(email,segment,game)
 		return
-
-	success = game.checkQuest(email, segment, text.split()[0] if text.split() else "")
+	txt = text.split[0] if text.split() else ""
+	success = game.checkQuest(email, segment, txt)
 	if not success:
-		if text.split()[0] == "help":
+		if txt == "help":
 			sendMessage(game.gamemail, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game) + "\n\n" + tutorialText(), email)
 		else:
 			sendMessage(game.gamemail, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game), email)
