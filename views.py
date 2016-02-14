@@ -53,11 +53,11 @@ def email():
     print('Receiving email...')
     TextProcess.sendMessage("asdf","asdf", "Email recieved", "19253818669")
     gamename = request.values.get('subject', None)
-    if not gamename: return
+    if not gamename: return ''
     person = request.values.get('from', None)
-    if not person: return
+    if not person: return ''
     text = request.values.get('text', None)
-    if not text: return
+    if not text: return ''
     TextProcess.evalAndRespond(person, text, gamename)
     return "This is not a site to be view by the browser"
 
@@ -67,7 +67,7 @@ def test():
     resp = twilio.twiml.Response()
     message = request.values.get('Body', None)
     if not message:
-        return None
+        return ''
     if 'hello' in message.lower():
         resp.message('world')
     return str(resp)
