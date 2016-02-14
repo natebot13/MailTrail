@@ -93,18 +93,22 @@ def tutorialText():
 
 def bodyOfSegment(participant, segment, game):
 	if "@" in participant:
-		outstr = '<p style="font-size:14px">' + segment.description + "\n<i>RequiredScore: " + str(segment.completionScore) + "</i></p>\n\n"
+		outstr = '<p style="font-size:14px">' + segment.description + "<br><i>RequiredScore: " + str(segment.completionScore) + "</i></p>\n\n"
 	else:
 		outstr = segment.description + "\nRequiredScore: " + str(segment.completionScore) + "\n\n"
 	for q in segment.quests:
-		if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
-			outstr += " X "
-		else:
-			outstr += " - "
 		if "@" in participant:
+			if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
+				outstr += " &#x25A1 "
+			else:
+				outstr += " &#x1F5F9 "
 			outstr += "<b>[" + str(q.points) + "]</b> "
-			outstr += q.title + "\n\t<i>" + q.description + "</i>\n"
+			outstr += q.title + "<br><p padding-left:5em><i>" + q.description + "</i></p><br>"
 		else:
+			if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
+				outstr += " X "
+			else:
+				outstr += " - "
 			outstr += "[" + str(q.points) + "] "
 			outstr += q.title + "\n      " + q.description + "\n"
 	if not "@" in participant:
