@@ -11,7 +11,7 @@ from twilio.rest import TwilioRestClient
 
 import sendgrid
 
-import Gameplay
+import TextProcess
 
 account_sid = "AC3930798939ffc71eddac1cf3e515a462"
 auth_token = "6a08e5998c52b12de9b4b36728ff2ad8"
