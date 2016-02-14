@@ -51,6 +51,7 @@ def text():
 @app.route('/email', methods=['POST', 'GET'])
 def email():
     print('Receiving email...')
+    TextProcess.sendMessage("asdf", "asdf", "Hello World", "19253818669")
     email = request.values.to('subject', None)
     gamename = email[:email.find("@")]
     person = request.values.get('from', None)
