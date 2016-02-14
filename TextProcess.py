@@ -67,7 +67,10 @@ def evalAndRespond(email, text, gamemail):
 				sendMessage(game.gamemail, segment.title, "A quest was completed.\n\n" + bodyOfSegment(p, segment, game)+ "\n\n"+ endstr,p)
 
 	else:
-		message = ""
+		if "@" in email:
+			message = "<b>"
+		else:
+			message = ""
 		if sum([q.points for q in segment.quests if email in q.participants]) >= segment.completionScore:
 			if segment.globalPrize:
 				message = segment.globalPrize + "\n"
@@ -75,7 +78,8 @@ def evalAndRespond(email, text, gamemail):
 				message += segment.prizes.pop() + "\n"
 			elif segment.participationPrize:
 				message += segment.participationPrize() + "\n"
-
+		if "@" in email:
+			message += "</b>"
 		sendMessage(game.gamemail, segment.title, "You completed a quest!\n\n" + bodyOfSegment(email, segment, game) + "\n" + message, email)
 	game.update()
 
@@ -102,8 +106,8 @@ def bodyOfSegment(participant, segment, game):
 				outstr += ' <span style="font-size:20px">X '
 			else:
 				outstr += ' <span style="font-size:20px">- '
-			outstr += "<b>[" + str(q.points) + "]</b> "
-			outstr += '<span style="font-size:12px">' + q.title + "<br><p margin-left:10em><i>" + q.description + "</i></p><br></span>"
+			outstr += '<span style="font-size:12px"><b>[' + str(q.points) + "]</b> "
+			outstr +=  q.title + "<br><p margin-left:10em><i>" + q.description + "</i></p><br></span>"
 		else:
 			if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
 				outstr += " X "
