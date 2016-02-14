@@ -54,7 +54,7 @@ def email():
     email = request.values.get('to', None)
     person = request.values.get('from', None)
     text = request.values.get('text', None)
-    if not gamename or not person or not text:
+    if not email or not person or not text:
         return "Incorrect POST data"
     TextProcess.evalAndRespond(person, text, email)
     return 'OK'
