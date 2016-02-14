@@ -13,7 +13,6 @@ class Game:
         else:
             self.subscribers = []
         self.collaborative = jdata["collaborative"]
-        self.title = jdata["title"]
         self.description = jdata["description"]
         self.segments = [Segment(d) for d in jdata["segments"]]
         self.didUpdate = False
@@ -42,7 +41,7 @@ class Game:
             sefl.participants.append(participant)
 
     def dictValue(self):
-        rd = {"title" : self.title, "description" : self.description, "collaborative" : self.collaborative}
+        rd = {description" : self.description, "collaborative" : self.collaborative}
         if self.creator:
             rd["creator"] = self.creator
         if self.subscribers:
