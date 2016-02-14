@@ -52,7 +52,7 @@ class Game:
 
     def update(self):
         with open("games/" + self.gamename + ".json", "w") as jfile:
-            json.dump(self.dictValue,jfile)
+            jfile.write(json.dumps(self.dictValue))
         self.didUpdate = True
 
     #validates a submitted code and updates stuff if it was valid
