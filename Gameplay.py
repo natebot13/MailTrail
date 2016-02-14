@@ -28,7 +28,7 @@ class Game:
             for seg in self.segments:
                 svalue = 0
                 for quest in seg.quests:
-                    if participant in participants:
+                    if participant in quest.participants:
                         svalue += quest.points
                 if svalue < seg.completionScore:
                     return seg
@@ -38,14 +38,14 @@ class Game:
 
     def subscribe(self,participant):
         if not participant in self.subscribers:
-            self.participants.append(participant)
+            self.subscribers.append(participant)
 
     def dictValue(self):
         rd = {"description" : self.description, "collaborative" : self.collaborative}
         if self.creator:
             rd["creator"] = self.creator
         if self.subscribers:
-            rd["subscribers"] = self.participants
+            rd["subscribers"] = self.subscribers
         rd["segments"] = [s.dictValue() for s in self.segments]
         return rd
 
