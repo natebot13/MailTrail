@@ -86,3 +86,7 @@ h2 {
   transform: translateY(-50%);
   z-index: 2;
 }
+
+.game {
+  text-align: justify;
+}

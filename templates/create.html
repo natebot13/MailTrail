@@ -3,6 +3,32 @@
 {% block content %}
 <h2>Make a game!</h2>
 <form>
-  
+  <div class="game">
+    Title:<input type="text" name="gamename" /><br />
+    <!-- <input type="checkbox" name="collaboratvie" value="True" />Collaborative?<br /> -->
+    Description: <input type="text" name="gamedescription" /><br />
+
+    Segments:<br />
+    <div class="segment">
+      Title:<input type="text" name="segment0-title"><br />
+      Description:<input type="text" name="segment0-description"><br />
+      Completion Score:<input type="number" name="segment0-score"><br />
+      Participation Prize:<input type="text" name="segment0-participationPrize"><br />
+      Global Prize:<input type="text" name="segment0-globalPrize"><br />
+      Error Message:<input type="text" name="segment0-errorMessage"><br />
+
+      Quests: <br />
+      <div class="quest">
+        Title:<input type="text" name="segment0-quest0-title"><br />
+        description:<input type="text" name="segment0-quest0-description"><br />
+        code:<input type="text" name="segment0-quest0-code"><br />
+        points:<input type="text" name="segment0-quest0-points"><br />
+      </div>
+      <a href="javascript:void(0);" onclick="addQuest();"></a>
+    </div>
+  </div>
 </form>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/create.js') }}"></script>
 {% endblock %}

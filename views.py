@@ -20,7 +20,7 @@ def home():
     )
 
 @app.route('/create')
-def about():
+def create():
     """Renders the about page."""
     return render_template(
         'create.html',
@@ -28,6 +28,10 @@ def about():
         year=datetime.now().year,
         message='Create a game here!'
     )
+
+# @app.route('/create/submit', methods=['POST', 'GET'])
+# def create_submit():
+#     passh
 
 @app.route('/text', methods=['POST', 'GET'])
 def text():
@@ -40,7 +44,7 @@ def text():
             jdata = json.load(jfile)
 
     if len(message.split()) > 1 and message.split()[0] == "switch":
-        jdata[person] = message.split()[1] 
+        jdata[person] = message.split()[1]
 
     if person in jdata:
         gamename = jdata[person] + "@nathanp.me"
