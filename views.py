@@ -47,7 +47,7 @@ def text():
     TextProcess.evalAndRespond(person, message, gamename)
     return render_template("This is not a site to be view by the browser")
 
-@app.route('/email', methods=['POST'])
+@app.route('/email', methods=['POST', 'GET'])
 def email():
     TextProcess.sendMessage("asdf","asdf", "Email recieved", "19253818669")
     gamename = request.values.get('subject', None)
