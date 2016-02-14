@@ -25,8 +25,6 @@ def evalAndRespond(email, text, gamename):
 		game.subscribe(email)
 		sendWelcome(email,game)
 		return
-	else:
-		sendMessage("asdf","asdf",str(game.subscribers), email)
 
 	segment = game.currentSegment(email)
 	success, message = checkQuest(email, segment, text.split()[0])
