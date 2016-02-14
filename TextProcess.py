@@ -5,11 +5,13 @@ from twilio.rest import TwilioRestClient
 
 from NotOnGit import account_sid, auth_token, sgk
 
+import sendgrid
+
 client = TwilioRestClient(account_sid, auth_token)
 
 sg = sendgrid.SendGridClient(sgk)
 
-import sendgrid
+
 
 
 email_url = '@mailtrailgame.com'
