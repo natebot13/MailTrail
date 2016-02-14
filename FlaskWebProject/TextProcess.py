@@ -1,12 +1,24 @@
 import Gameplay
+
 import twilio.twiml
+from twilio.rest import TwilioRestClient
+
 import sendgrid
+
+account_sid = "AC3930798939ffc71eddac1cf3e515a462"
+auth_token = "6a08e5998c52b12de9b4b36728ff2ad8"
+client = TwilioRestClient(account_sid, auth_token)
 
 sg = sendgrid.SendGridClient('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')
 
 email_url = '@mailtrailgame.com'
 
-def evalAndRespond(email, text, game):
+def evalAndRespond(email, text, gamename):
+	try:
+		game = Gameplay.Game(gamename)
+	except IOError as e:
+		sendTutorial(email)
+		return
 	if not email in game.subscribers:
 		game.subscribe(email)
 		sendWelcome(email,game)
@@ -56,7 +68,7 @@ def tutorialText():
 def bodyOfSegment(participant, segment, game):
 	outstr = segment.description + "\nRequiredScore: " + segment.completionScore + "\n\n"
 	for q in segment.quests:
-		if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants): 
+		if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
 			outstr += " x "
 		else:
 			outstr += " - "
@@ -68,7 +80,7 @@ def bodyOfSegment(participant, segment, game):
 def sendMessage(gamename,subject,body, to):
 	if not "@" in to:
 		#this must be a phone number so use text instead
-		
+		message = client.messages.create(to=to, from_="16195866665", body=body)
 	else:
 		message = sendgrid.Mail()
 		message.add_to(to)
