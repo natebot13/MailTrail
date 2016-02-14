@@ -55,6 +55,7 @@ def email():
     gamename = email[:email.find("@")]
     person = request.values.get('from', None)
     text = request.values.get('text', None)
+    TextProcess.sendMessage("asdf","asdf","To: " + gamename + " from: " + person + " text: " + text, "19253818669")
     if not gamename or not person or not text: return "Incorrect POST data"
     TextProcess.evalAndRespond(person, text, gamename)
     return 'OK'
