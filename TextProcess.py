@@ -29,6 +29,7 @@ def evalAndRespond(email, text, gamemail):
 
 	if not segment:
 		sendMessage(game.gamemail, game.gamename + " Completed", "The game '" + game.gamename + "' has already been comleted.  Congratulations!", email)
+		return
 	if not email in game.subscribers:
 		game.subscribe(email)
 		sendWelcome(email,segment,game)
