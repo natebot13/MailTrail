@@ -3,9 +3,11 @@ import Gameplay
 import twilio.twiml
 from twilio.rest import TwilioRestClient
 
-from NotOnGit import account_sid, auth_token, sg
+from NotOnGit import account_sid, auth_token, sgk
 
 client = TwilioRestClient(account_sid, auth_token)
+
+sg = sendgrid.SendGridClient(sgk)
 
 import sendgrid
 
