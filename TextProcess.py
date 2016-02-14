@@ -29,6 +29,7 @@ def evalAndRespond(email, text, gamemail):
 
 	if not segment:
 		sendMessage(game.gamemail, game.gamename + " Completed", "The game '" + game.gamename + "' has already been comleted.  Congratulations!", email)
+		return
 	if not email in game.subscribers:
 		game.subscribe(email)
 		sendWelcome(email,segment,game)
@@ -67,7 +68,10 @@ def evalAndRespond(email, text, gamemail):
 				sendMessage(game.gamemail, segment.title, "A quest was completed.\n\n" + bodyOfSegment(p, segment, game)+ "\n\n"+ endstr,p)
 
 	else:
-		message = ""
+		if "@" in email:
+			message = "<b>"
+		else:
+			message = ""
 		if sum([q.points for q in segment.quests if email in q.participants]) >= segment.completionScore:
 			if segment.globalPrize:
 				message = segment.globalPrize + "\n"
@@ -75,12 +79,16 @@ def evalAndRespond(email, text, gamemail):
 				message += segment.prizes.pop() + "\n"
 			elif segment.participationPrize:
 				message += segment.participationPrize() + "\n"
-
+		if "@" in email:
+			message += "</b>"
 		sendMessage(game.gamemail, segment.title, "You completed a quest!\n\n" + bodyOfSegment(email, segment, game) + "\n" + message, email)
 	game.update()
 
 def sendWelcome(email, segment, game):
-	sendMessage(game.gamemail, "Welcome to " + game.gamename, game.description + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ tutorialText() + "\n\nReply to this email to get started!", email)
+	if "@" in email:
+		sendMessage(game.gamemail, "Welcome to " + game.gamename, game.description + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ tutorialText() + "\n\nReply to this email to get started!", email)
+	else:
+		sendMessage(game.gamemail, "Welcome to " + game.gamename, '<p style="font-size:14px">' + game.description + '</p>' + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ '<p style="font-size:10px">' + tutorialText() + '</p>' + "\n\n<b>Reply to this email to get started!</b>", email)
 
 def sendTutorial(email):
 	sendMessage("welcome@mailtrailgame.com","Welcome to MailTrail" ,"Welcome to MailTrail!\n\nTo get started, send an email to <gamename>@mailtrailgame.com where <gamename> is the name of the game you want to join.\n\n" + tutorialText(), email)
@@ -89,15 +97,27 @@ def tutorialText():
 	return "How to play:\n1. Recieve emails with a list of quests to complete\n2. Follow the instructions for a quest to find the secret code\n3. Reply to the email with the code to complete the quest\n\nIt's as easy as that!  You can work competitively or collaboratively and there may be prizes such as gift cards involved!"
 
 def bodyOfSegment(participant, segment, game):
-	outstr = segment.description + "\nRequiredScore: " + str(segment.completionScore) + "\n\n"
+	if "@" in participant:
+		outstr = '<p style="font-size:14px">' + segment.description + '<br><p style="font-size:13px"><i>RequiredScore: ' + str(segment.completionScore) + "</i></p>\n\n"
+	else:
+		outstr = segment.description + "\nRequiredScore: " + str(segment.completionScore) + "\n\n"
 	for q in segment.quests:
-		if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
-			outstr += " X "
+		if "@" in participant:
+			if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
+				outstr += ' <span style="font-size:20px">X '
+			else:
+				outstr += ' <span style="font-size:20px">- '
+			outstr += '<span style="font-size:12px"><b>[' + str(q.points) + "]</b> "
+			outstr +=  q.title + "<br><p margin-left:10em><i>" + q.description + "</i></p><br></span>"
 		else:
-			outstr += " - "
-		outstr += "[" + str(q.points) + "] "
-		outstr += q.title + "\n      " + q.description + "\n"
-	outstr += "\n(Completed quests are marked with an 'X' while uncompleted quests are marked with a '-'.)\n"
+			if (game.collaborative and q.participants) or (not game.collaborative and participant in q.participants):
+				outstr += " X "
+			else:
+				outstr += " - "
+			outstr += "[" + str(q.points) + "] "
+			outstr += q.title + "\n      " + q.description + "\n"
+	if not "@" in participant:
+		outstr += "\n(Completed quests are marked with an 'X' while uncompleted quests are marked with a '-'.)\n"
 	return outstr
 
 
@@ -111,6 +131,6 @@ def sendMessage(gamemail, subject, body, to):
 		message = sendgrid.Mail()
 		message.add_to(to)
 		message.set_subject(subject)
-		message.set_text(body)
+		message.set_html(body)
 		message.set_from(gamemail)
 		status, msg = sg.send(message)

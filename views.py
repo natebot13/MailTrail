@@ -39,7 +39,7 @@ def text():
     message = request.values.get('Body', None)
     person = request.values.get('From', None)
     jdata = {}
-    if "textReg.json" in os.listDir():
+    if "textReg.json" in os.listdir("."):
         with open("textReg.json", "r") as jfile:
             jdata = json.load(jfile)
 
