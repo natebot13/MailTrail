@@ -51,6 +51,7 @@ class Game:
         return rd
 
     def update(self):
+        print(self.dictValue())
         with open("games/" + self.gamename + ".json", "w") as jfile:
             json.dump(self.dictValue(), jfile)
         self.didUpdate = True
