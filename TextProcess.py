@@ -80,7 +80,10 @@ def evalAndRespond(email, text, gamemail):
 	game.update()
 
 def sendWelcome(email, segment, game):
-	sendMessage(game.gamemail, "Welcome to " + game.gamename, game.description + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ tutorialText() + "\n\nReply to this email to get started!", email)
+	if "@" in email:
+		sendMessage(game.gamemail, "Welcome to " + game.gamename, game.description + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ tutorialText() + "\n\nReply to this email to get started!", email)
+	else:
+		sendMessage(game.gamemail, "Welcome to " + game.gamename, '<p style="font-size:14px">' + game.description + '</p>' + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ '<p style="font-size:10px">' + tutorialText() + '</p> + "\n\n<b>Reply to this email to get started!</b>", email)
 
 def sendTutorial(email):
 	sendMessage("welcome@mailtrailgame.com","Welcome to MailTrail" ,"Welcome to MailTrail!\n\nTo get started, send an email to <gamename>@mailtrailgame.com where <gamename> is the name of the game you want to join.\n\n" + tutorialText(), email)
