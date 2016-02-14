@@ -41,7 +41,7 @@ class Game:
             sefl.participants.append(participant)
 
     def dictValue(self):
-        rd = {description" : self.description, "collaborative" : self.collaborative}
+        rd = {"description" : self.description, "collaborative" : self.collaborative}
         if self.creator:
             rd["creator"] = self.creator
         if self.subscribers:
