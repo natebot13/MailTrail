@@ -1,10 +1,6 @@
 """
 Routes and views for the flask application.
 """
-
-from flask import Flask
-app = Flask(__name__)
-
 from datetime import datetime
 from flask import request, redirect, render_template
 
