@@ -27,7 +27,7 @@ def evalAndRespond(email, text, gamename):
 		return
 
 	segment = game.currentSegment(email)
-	success, message = game.checkQuest(email, segment, text.split()[0])
+	success = game.checkQuest(email, segment, text.split()[0])
 	if not success:
 		sendMessage(game.gamename, segment.title, segment.errorMessage + "\n\n" + bodyOfSegment(email, segment, game) + "\n\n" + tutorialText(), email)
 	elif game.collaborative:
@@ -57,7 +57,17 @@ def evalAndRespond(email, text, gamename):
 				sendMessage(game.gamename, segment.title, "A quest was completed.\n\n" + bodyOfSegment(p, segment, game)+ "\n\n"+ endstr,p)
 
 	else:
+		message = ""
+		if sum([q.points for q in segment.quests if email in q.participants]) > segment.completionScore:
+			if segment.globalPrize:
+				message = segment.globalPrize + "\n"
+			if segment.prizes:
+				message += segment.prizes.pop() + "\n"
+			elif segment.participationPrize:
+				message += segment.participationPrize() + "\n"
+
 		sendMessage(game.gamename, segment.title, "You completed a quest!\n\n" + bodyOfSegment(email, segment, game) + "\n" + message, email)
+	game.update()
 
 def sendWelcome(email, game):
 	sendMessage(game.gamename, "Welcome to " + game.gamename, game.description + "\n\n" + tutorialText() + "\n\nReply to this email to get started!", email)
