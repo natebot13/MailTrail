@@ -53,13 +53,11 @@ def email():
     print('Receiving email...')
     TextProcess.sendMessage("asdf","asdf", "Email recieved", "19253818669")
     gamename = request.values.get('subject', None)
-    if not gamename: return ''
     person = request.values.get('from', None)
-    if not person: return ''
     text = request.values.get('text', None)
-    if not text: return ''
+    if not gamename or not person or not text: return "Incorrect POST data"
     TextProcess.evalAndRespond(person, text, gamename)
-    return "This is not a site to be view by the browser"
+    return "Good post data"
 
 
 @app.route('/text-test', methods=['GET', 'POST'])
@@ -67,7 +65,7 @@ def test():
     resp = twilio.twiml.Response()
     message = request.values.get('Body', None)
     if not message:
-        return ''
+        return 'Incorect POST data'
     if 'hello' in message.lower():
         resp.message('world')
     return str(resp)
