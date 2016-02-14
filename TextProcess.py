@@ -18,12 +18,8 @@ email_url = '@mailtrailgame.com'
 def evalAndRespond(email, text, gamename):
 	try:
 		game = Gameplay.Game(gamename)
-	except:
-		msg = ""
-		dirs = os.listdir("games/")
-		for d in dirs:
-			msg += d + "\n"
-		sendMessage("adsf","asdf",msg,email)
+	except as e:
+		sendMessage("adsf","asdf",str(e),email)
 		#sendTutorial(email)
 		return
 	if not email in game.subscribers:
