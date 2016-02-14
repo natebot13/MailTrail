@@ -79,6 +79,7 @@ def evalAndRespond(email, text, gamename):
 	game.update()
 
 def sendWelcome(email, segnment, game):
+	sendMessage("ASDF","ASDF","welcoming", "19253818669")
 	sendMessage(game.gamename, "Welcome to " + game.gamename, game.description + "\n\n" + bodyOfSegment(email,segment,game) +"\n\n"+ tutorialText() + "\n\nReply to this email to get started!", email)
 
 def sendTutorial(email):
