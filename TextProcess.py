@@ -5,6 +5,8 @@ from twilio.rest import TwilioRestClient
 
 import sendgrid
 
+import os
+
 account_sid = "AC3930798939ffc71eddac1cf3e515a462"
 auth_token = "6a08e5998c52b12de9b4b36728ff2ad8"
 client = TwilioRestClient(account_sid, auth_token)
@@ -17,7 +19,12 @@ def evalAndRespond(email, text, gamename):
 	try:
 		game = Gameplay.Game(gamename)
 	except:
-		sendTutorial(email)
+		msg = ""
+		dirs = os.listdir(".")
+		for d in dirs:
+			msg += d + "\n"
+		sendMessage("adsf","asdf",msg,email)
+		#sendTutorial(email)
 		return
 	if not email in game.subscribers:
 		game.subscribe(email)
