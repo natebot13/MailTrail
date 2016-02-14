@@ -97,7 +97,7 @@ class Segment:
         if "participationPrize" in d:
             self.participationPrize = d["participationPrize"]
 
-    def dictValue():
+    def dictValue(self):
         rd = {"title" : self.title, "description" : self.description, "completionScore" : self.completionScore, "errorMessage" : self.errorMessage}
         rd["quests"] = [q.dictValue() for q in self.quests]
         if self.prizes:
@@ -124,7 +124,7 @@ class Quest:
             self.participants = []
             self.completed = False
 
-    def dictValue():
+    def dictValue(self):
         rd = {"title" : self.title, "description" : self.description, "code" : self.code, "points" : self.points}
         if self.participants:
             rd["participants"] = self.participants
