@@ -66,16 +66,16 @@ class Game:
                     outstr = ""
                     q.participants.append(participant)
                     if seg.status + quest.points >= seg.completionScore:
-                    seg.completed = True;
-                    if self.collaborative:
-                        return True, "collab"
-                    else:
-                        if globalPrize:
-                            outstr += globalPrize + "\n"
-                        if prizes:
-                            outstr += prizes.pop() + "\n"
-                        elif participationPrize:
-                            outstr += participationPrize + "\n"
+                        seg.completed = True;
+                        if self.collaborative:
+                            return True, "collab"
+                        else:
+                            if globalPrize:
+                                outstr += globalPrize + "\n"
+                            if prizes:
+                                outstr += prizes.pop() + "\n"
+                            elif participationPrize:
+                                outstr += participationPrize + "\n"
                     self.update
                     return True, outstr
             return False, ""
