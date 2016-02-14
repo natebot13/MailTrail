@@ -26,27 +26,32 @@ def about():
         year=datetime.now().year,
         message='Create a game here!'
     )
+import urllib
 
 @app.route('/text', methods=['POST', 'GET'])
 def text():
     print('Receiving text...')
     message = request.values.get('Body', None)
     person = request.values.get('From', None)
-    gamename = 'treehacks'
+    gamename = 'treehacks@blank.b'
     if not message or not person:
         return 'Incorrect POST data'
     TextProcess.evalAndRespond(person, message, gamename)
     return 'OK'
 
+
+
 @app.route('/email', methods=['POST', 'GET'])
 def email():
     print('Receiving email...')
-    email = request.values.to('subject', None)
-    gamename = email[:email.find("@")]
+    email = request.values.get('to', None)
     person = request.values.get('from', None)
     text = request.values.get('text', None)
-    if not gamename or not person or not text: return "Incorrect POST data"
-    TextProcess.evalAndRespond(person, text, gamename)
+    if not email or not person:
+        return "Incorrect POST data"
+    if not text:
+        text = ""
+    TextProcess.evalAndRespond(person, text, email)
     return 'OK'
 
 
