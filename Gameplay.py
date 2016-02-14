@@ -79,7 +79,7 @@ class Game:
                                 outstr += participationPrize + "\n"
                     self.update
                     return True, outstr
-            return False, ""
+        return False, ""
 
 
 
