@@ -52,7 +52,7 @@ def text():
 def email():
     print('Receiving email...')
     TextProcess.sendMessage("asdf", "asdf", "A", "19253818669")
-    email = request.values.to('subject', None)
+    email = request.values.get('to', None)
     TextProcess.sendMessage("asdf", "asdf", "B", "19253818669")
     gamename = email[:email.find("@")]
     TextProcess.sendMessage("asdf", "asdf", "C", "19253818669")
